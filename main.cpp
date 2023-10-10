@@ -1,23 +1,33 @@
 #include <iostream>
 
-#define SQUARE_SIZE
+#define SQUARE_SIZE 3
+#define BOARD_SIZE 9
 
-bool* sudokuRow=new bool[9];
-bool* sudokuCol=new bool[9];
-bool* sudokuSqr=new bool[9];
+bool* sudokuRow=new bool[BOARD_SIZE];
+bool* sudokuCol=new bool[BOARD_SIZE];
+bool* sudokuSqr=new bool[BOARD_SIZE];
 
 void initializeSquare(short** sudokuSquare){
-    for(int i=0;i<3;i++){
-        sudokuSquare[i]=new short[3];
-        for(int j=0;j<3;j++){
+    for(int i=0;i<SQUARE_SIZE;i++){
+        sudokuSquare[i]=new short[SQUARE_SIZE];
+        for(int j=0;j<SQUARE_SIZE;j++){
             std::cin >> sudokuSquare[i][j];
         }
     }
 }
 
+void initializeBoard(short** sudokuBoard){
+    for(int i=0;i<BOARD_SIZE;i++){
+        sudokuBoard[i]=new short[BOARD_SIZE];
+        for(int j=0;j<BOARD_SIZE;j++){
+            std::cin >> sudokuBoard[i][j];
+        }
+    }
+}
+
 void printSquare(short** sudokuSquare){
-    for(int i=0;i<3;i++){
-        for(int j=0;j<3;j++){
+    for(int i=0;i<SQUARE_SIZE;i++){
+        for(int j=0;j<SQUARE_SIZE;j++){
             char value = sudokuSquare[i][j]==0 ? '*' : sudokuSquare[i][j]+48;
             std::cout << value << "\t";
         }
@@ -25,9 +35,19 @@ void printSquare(short** sudokuSquare){
     }
 }
 
+void printBoard(short** sudokuBoard){
+    for(int i=0;i<BOARD_SIZE;i++){
+        for(int j=0;j<BOARD_SIZE;j++){
+            char value = sudokuBoard[i][j]==0 ? '*' : sudokuBoard[i][j]+48;
+            std::cout << value << "\t";
+        }
+        std::cout << std::endl;
+    }
+}
+
 void checkSquare(short** sudokuSquare){
-    for(int i=0;i<3;i++){
-        for(int j=0;j<3;j++){
+    for(int i=0;i<SQUARE_SIZE;i++){
+        for(int j=0;j<SQUARE_SIZE;j++){
             if(sudokuSquare[i][j]!=0){
                 sudokuSqr[sudokuSquare[i][j]-1] = true;
             }
@@ -36,7 +56,7 @@ void checkSquare(short** sudokuSquare){
 }
 
 void checkRow(short** sudokuSquare){
-    for(int i=0;i<3;i++){
+    for(int i=0;i<SQUARE_SIZE;i++){
         if(sudokuSquare[0][i]!=0){
             sudokuCol[sudokuSquare[0][i]-1] = true;
         }
@@ -44,7 +64,7 @@ void checkRow(short** sudokuSquare){
 }
 
 void checkColumn(short** sudokuSquare){
-    for(int i=0;i<3;i++){
+    for(int i=0;i<SQUARE_SIZE;i++){
         if(sudokuSquare[0][i]!=0){
             sudokuRow[sudokuSquare[i][0]-1] = true;
         }
@@ -53,7 +73,7 @@ void checkColumn(short** sudokuSquare){
 
 void printRowStats(){
     std::cout<<"Filas: ";
-    for (short i=0;i<9;i++){
+    for (short i=0;i<BOARD_SIZE;i++){
         std::cout<<sudokuRow[i];
     }
     std::cout<<std::endl;
@@ -61,7 +81,7 @@ void printRowStats(){
 
 void printColStats(){
     std::cout<<"Columnas: ";
-    for (short i=0;i<9;i++){
+    for (short i=0;i<BOARD_SIZE;i++){
         std::cout<<sudokuCol[i];
     }
     std::cout<<std::endl;
@@ -69,7 +89,7 @@ void printColStats(){
 
 void printSqrStats(){
     std::cout<<"Cuadrado: ";
-    for (short i=0;i<9;i++){
+    for (short i=0;i<BOARD_SIZE;i++){
         std::cout<<sudokuSqr[i];
     }
     std::cout<<std::endl;
@@ -78,11 +98,14 @@ void printSqrStats(){
 int main(){
     std::cout << "Please write the values of the sudoku board: ";
     
-    short** sudokuSquare = new short*[3];
+    short** sudokuSquare = new short*[SQUARE_SIZE];
+    short** sudokuBoard = new short*[BOARD_SIZE];
     
-    initializeSquare(sudokuSquare);
+    //initializeSquare(sudokuSquare);
+    initializeBoard(sudokuBoard);
     
     printSquare(sudokuSquare);
+    printBoard(sudokuBoard);
 
     checkSquare(sudokuSquare);
     checkRow(sudokuSquare);
